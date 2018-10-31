@@ -1,4 +1,4 @@
-function formartSearchList(list) {
+function formartSearchList(list, response) {
     if (list && list.length > 0) {
         let array = [];
 
@@ -13,7 +13,10 @@ function formartSearchList(list) {
             }
         );
 
-        console.log(array)
+        response.end(JSON.stringify({
+            code: 1,
+            list: array
+        }));
     }
 }
 

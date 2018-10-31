@@ -4,7 +4,7 @@ const fsl = require('./formatSearchList');
 
 let searchUrl = 'https://www.zhihu.com/api/v4/search_v3';
 
-function getResults() {
+function search(response) {
     superagent
     .get(searchUrl)
     .query({
@@ -22,7 +22,7 @@ function getResults() {
     .then(
         (res) => {
             if (res) {
-                fsl.formartSearchList(res.body.data);
+                fsl.formartSearchList(res.body.data, response);
             }
         }
     )
@@ -33,4 +33,6 @@ function getResults() {
     );
 }
 
-getResults();
+module.exports = {
+    search: search
+}
