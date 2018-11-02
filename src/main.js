@@ -1,34 +1,34 @@
 const superagent = require('superagent');
-const cheerio = require('cheerio');
 const fsl = require('./formatSearchList');
+const response = require('./response/response');
 
 let searchUrl = 'https://www.zhihu.com/api/v4/search_v3';
 
-function search(response) {
+function search(resp, query) {
+    console.log('query', query)
     superagent
     .get(searchUrl)
-    .query({
-        t: 'general',
-        q: '体育',
-        correction: 6,
-        offset: 30,
-        limit: 30,
-        show_all_topics: 0,
-        search_hash_id: '3e518350cd45a9acb1c4de20ddea69e6'
-    })
-    .set('content-type', 'application/*+json')
-    .set('accept','application/*+json')
+    .query(query)
+    .set('accept','application/json')
     .set('user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36')
+    .timeout(10000)
     .then(
         (res) => {
-            if (res) {
-                fsl.formartSearchList(res.body.data, response);
+            /**
+             * 解析数据
+             */
+            if (res && res.body && res.body.data && res.body.data.lenth > 0) {
+                fsl.formartSearchList(res.body.data, resp);
+            } else {
+                response.noMoreData(resp);
             }
         }
     )
     .catch(
         (err) => {
-            console.log(err)
+            if (err.timeout) {
+                response.timeOutRequest(resp);
+            }
         }
     );
 }

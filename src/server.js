@@ -1,24 +1,23 @@
 const http = require('http');
 const url = require('url');
-const querystring = require('querystring');
-const main = require('./main');
+const response = require('./response/response');
+const search = require('./core/search');
 
 function createServer() {
     let port = 10349;
     let host = '127.0.0.1';
 
     let server = http.createServer(function (req, res) {
-        let arg = url.parse(req.url, true).query;
+        let urlObj = url.parse(req.url, true);
+        let pathName = urlObj.pathname;
+        let query = urlObj.query;
 
-        if (req.url !== '/favicon.ico') {
-            res.writeHead(200, {
-                'Content-Type': 'application/json'
-            });
-
-            /**
-             * 查询
-             */
-            main.search(res);
+        if (pathName == '/topAnswers') {
+            console.log('request my server', new Date().getTime())
+            response.setHeader(res);
+            search.topAnswers(query, res);
+        } else {
+            res.end();
         }
     });
 
