@@ -22,7 +22,6 @@ function formartByKeyWords(list) {
  * 包装结果
  */
 function formartTopAnswers(list) {
-    console.log('start', new Date().getTime())
     let array = [];
 
     list.forEach(

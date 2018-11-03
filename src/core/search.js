@@ -32,7 +32,6 @@ function topAnswers(query, resp) {
             let result = formator.formartTopAnswers((res.body.data));
 
             resp.end(JSON.stringify(result));
-            console.log('end', new Date().getTime())
         } else {
             response.badRequest(0, resp);
         }
@@ -44,7 +43,6 @@ function topAnswers(query, resp) {
  * 查询主方法
  */
 function search(resp, data, callback) {
-    console.log('request zhihu server', new Date().getTime())
     superagent
     .get(data.searchUrl)
     .query(data.query)
@@ -53,7 +51,6 @@ function search(resp, data, callback) {
     .timeout(10000)
     .then(
         (res) => {
-            console.log('data from zhihu', new Date().getTime())
             callback && callback(res)
         }
     )

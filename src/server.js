@@ -13,7 +13,6 @@ function createServer() {
         let query = urlObj.query;
 
         if (pathName == '/topAnswers') {
-            console.log('request my server', new Date().getTime())
             response.setHeader(res);
             search.topAnswers(query, res);
         } else {
