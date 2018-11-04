@@ -28,15 +28,17 @@ function formartTopAnswers(list) {
         (item) => {
             let target = item.target || {};
             let question = target.question || {};
+            let author = target.author || {};
             let linkUrl = 'https://www.zhihu.com/question/' + question.id +'/answer/' + target.id;
 
             array.push({
                 title: question.title || '',
-                pic: (target.topic_thumbnails || [])[0],
                 excerpt: (target.excerpt || '').replace(/<b>/g, '').replace(/<\/b>/,''),
                 voteup_count: target.voteup_count || 0,
                 comment_count: target.comment_count || 0,
-                linkUrl: linkUrl
+                linkUrl: linkUrl,
+                answer_id: target.id,
+                author_name: author.name
             });
         }
     );

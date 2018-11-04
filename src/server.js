@@ -5,7 +5,7 @@ const search = require('./core/search');
 
 function createServer() {
     let port = 10349;
-    let host = '127.0.0.1';
+    let host = '192.168.0.101';
 
     let server = http.createServer(function (req, res) {
         let urlObj = url.parse(req.url, true);
